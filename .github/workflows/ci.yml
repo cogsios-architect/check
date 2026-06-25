@@ -1,0 +1,29 @@
+name: HTML CI Check
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  check-html:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Show files
+        run: ls -la
+
+      - name: Check index.html exists
+        run: test -f index.html
+
+      - name: Check HTML has required tags
+        run: |
+          grep -q "<html" index.html
+          grep -q "<head" index.html
+          grep -q "<body" index.html
+          grep -q "</html>" index.html
+          echo "HTML basic check passed"
